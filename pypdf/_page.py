@@ -1980,7 +1980,11 @@ class PageObject(DictionaryObject):
                 memo_tm = tm_matrix.copy()
             # Table 5.2 page 398
             elif operator == b"Tz":
-                char_scale = float(operands[0]) / 100.0
+                # Hack to work around scenario when operands = []
+                if len(operands) > 0:
+                    char_scale = float(operands[0]) / 100.0
+                else:
+                    char_scale = 1.0
             elif operator == b"Tw":
                 space_scale = 1.0 + float(operands[0])
             elif operator == b"TL":
